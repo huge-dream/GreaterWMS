@@ -62,10 +62,10 @@ class GoodlistfileViewSet(views.APIView):
         if self.request.user:
             lang = self.request.META.get('HTTP_LANGUAGE')
         else:
-            lang = 'en-us'
+            lang = 'en-US'
         if lang == 'zh-hans':
             data_header = goodsfiles.cn_data_header()
-        elif lang == 'en-us':
+        elif lang == 'en-US':
             data_header = goodsfiles.en_data_header()
         else:
             data_header = goodsfiles.en_data_header()
@@ -225,10 +225,10 @@ class SupplierfileViewSet(views.APIView):
         if self.request.user:
             lang = self.request.META.get('HTTP_LANGUAGE')
         else:
-            lang = 'en-us'
+            lang = 'en-US'
         if lang == 'zh-hans':
             data_header = supplierfiles.cn_data_header()
-        elif lang == 'en-us':
+        elif lang == 'en-US':
             data_header = supplierfiles.en_data_header()
         else:
             data_header = supplierfiles.en_data_header()
@@ -243,7 +243,10 @@ class SupplierfileViewSet(views.APIView):
                                               id=self.request.META.get('HTTP_OPERATOR')).first().staff_name
             if excel_type in ['xlsx', 'xls', 'csv']:
                 self.get_queryset().delete()
-                df = pd.read_excel(files)
+                if excel_type == 'csv':
+                    df = pd.read_csv(files)
+                else:
+                    df = pd.read_excel(files)
                 df.drop_duplicates(keep='first', inplace=True)
                 data_list = df.drop_duplicates(subset=[data_header.get('supplier_name')], keep='first').values
                 for d in range(len(data_list)):
@@ -293,10 +296,10 @@ class CustomerfileViewSet(views.APIView):
         if self.request.user:
             lang = self.request.META.get('HTTP_LANGUAGE')
         else:
-            lang = 'en-us'
+            lang = 'en-US'
         if lang == 'zh-hans':
             data_header = customerfiles.cn_data_header()
-        elif lang == 'en-us':
+        elif lang == 'en-US':
             data_header = customerfiles.en_data_header()
         else:
             data_header = customerfiles.en_data_header()
@@ -483,10 +486,10 @@ class GoodlistfileAddViewSet(views.APIView):
         if self.request.user:
             lang = self.request.META.get('HTTP_LANGUAGE')
         else:
-            lang = 'en-us'
+            lang = 'en-US'
         if lang == 'zh-hans':
             data_header = goodsfiles.cn_data_header()
-        elif lang == 'en-us':
+        elif lang == 'en-US':
             data_header = goodsfiles.en_data_header()
         else:
             data_header = goodsfiles.en_data_header()
@@ -639,10 +642,10 @@ class SupplierfileAddViewSet(views.APIView):
         if self.request.user:
             lang = self.request.META.get('HTTP_LANGUAGE')
         else:
-            lang = 'en-us'
+            lang = 'en-US'
         if lang == 'zh-hans':
             data_header = supplierfiles.cn_data_header()
-        elif lang == 'en-us':
+        elif lang == 'en-US':
             data_header = supplierfiles.en_data_header()
         else:
             data_header = supplierfiles.en_data_header()
@@ -719,10 +722,10 @@ class CustomerfileAddViewSet(views.APIView):
         if self.request.user:
             lang = self.request.META.get('HTTP_LANGUAGE')
         else:
-            lang = 'en-us'
+            lang = 'en-US'
         if lang == 'zh-hans':
             data_header = customerfiles.cn_data_header()
-        elif lang == 'en-us':
+        elif lang == 'en-US':
             data_header = customerfiles.en_data_header()
         else:
             data_header = customerfiles.en_data_header()
