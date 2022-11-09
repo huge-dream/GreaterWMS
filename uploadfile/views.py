@@ -1163,7 +1163,6 @@ class DnlistfileaddViewSet(views.APIView):
         if files:
             excel_type = files.name.split('.')[1]
             staff_name = staff.objects.filter(id=self.request.META.get('HTTP_OPERATOR')).first().staff_name
-            warehouse_id = warehouse.objects.all().first().pk
             if excel_type in ['xlsx', 'xls', 'csv']:
                 try:
                     if excel_type == 'csv':
@@ -1240,7 +1239,7 @@ class DnlistfileaddViewSet(views.APIView):
                             'customer': customer_name,
                             'goods_code': str(data_list[i][0]),
                             'goods_qty': int(data_list[i][1]),
-                            'warehouse_id': str(data_list[i][2]),
+                            'warehouse_id': warehouse_pk,
                             'creater': str(staff_name)
                         }
                         serializer = DNDetailPostSerializer(data=check_data)
