@@ -1199,7 +1199,7 @@ class DnlistfileaddViewSet(views.APIView):
                             data['dn_code'] = 'DN' + order_day + '1'
                         data['openid'] = warehouse_openid
                         data['bar_code'] = Md5.md5(str(data['dn_code']))
-                        data['warehouse_id'] = int(data_list[i][2])
+                        data['warehouse_id'] = str(data_list[i][2])
                         data['customer'] = customer_name
                         data['creater'] = str(staff_name)
                         serializer = DNListPostSerializer(data=data)
@@ -1240,7 +1240,7 @@ class DnlistfileaddViewSet(views.APIView):
                             'customer': customer_name,
                             'goods_code': str(data_list[i][0]),
                             'goods_qty': int(data_list[i][1]),
-                            'warehouse_id': int(data_list[i][2]),
+                            'warehouse_id': str(data_list[i][2]),
                             'creater': str(staff_name)
                         }
                         serializer = DNDetailPostSerializer(data=check_data)
