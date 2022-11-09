@@ -1182,7 +1182,7 @@ class DnlistfileaddViewSet(views.APIView):
                             data_list[i][1] = 0
                         if not is_number(str(data_list[i][2])):
                             data_list[i][2] = int(warehouse_id)
-                        warehouse_openid = warehouse.objects.filter(warehose_id=data_list[i][2]).first().openid
+                        warehouse_openid = warehouse.objects.filter(warehouse_id=data_list[i][2]).first().openid
                         customer_name = customer.objects.all().first().customer_name
                         qs_set = DnListModel.objects.filter(openid=warehouse_openid, is_delete=False)
                         order_day = str(timezone.now().strftime('%Y%m%d'))
