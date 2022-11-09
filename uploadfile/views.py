@@ -1180,8 +1180,6 @@ class DnlistfileaddViewSet(views.APIView):
                             continue
                         if not is_number(str(data_list[i][1])):
                             data_list[i][1] = 0
-                        if not is_number(str(data_list[i][2])):
-                            data_list[i][2] = int(warehouse_id)
                         if (w := warehouse.objects.filter(warehouse_id=str(data_list[i][2]))).exists():
                             warehouse_openid = w.first().openid
                             warehouse_pk = w.first().pk
