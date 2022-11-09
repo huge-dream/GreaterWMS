@@ -1309,7 +1309,7 @@ class DnlistfileaddViewSet(views.APIView):
                             total_cost=total_cost, transportation_fee=transportation_res)
                     return Response({"detail": "success"}, status=200)
                 except:
-                    print(format_exc())
+                    # print(format_exc())
                     raise APIException({"detail": "Upload Failed"})
             else:
                 raise APIException({"detail": "Can Not Support This File Type"})
