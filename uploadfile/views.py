@@ -541,7 +541,7 @@ class GoodlistfileAddViewSet(views.APIView):
                         if goodslist.objects.filter(goods_code=str(data_list[i][0]).strip()).exists():
                             pass
                         else:
-                            bar_code = Md5.md5(str(data_list[i][0]).strip())
+                            bar_code = str(data_list[i][0]).strip()
                             goodslist.objects.create(goods_code=str(data_list[i][0]).strip(),
                                                     goods_desc=str(data_list[i][1]).strip(),
                                                     goods_supplier=str(data_list[i][2]).strip(),
@@ -996,7 +996,7 @@ class AsnlistfileAddViewSet(views.APIView):
                         if goodslist.objects.filter(goods_code=str(data_list[i][1]).strip(), is_delete=False).exists():
                             pass
                         else:
-                            bar_code = Md5.md5(str(data_list[i][1]).strip())
+                            bar_code = str(data_list[i][1]).strip()
                             goodslist.objects.create(goods_code=str(data_list[i][1]).strip(),
                                                     goods_desc=n,
                                                     goods_supplier=n,
