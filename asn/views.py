@@ -532,32 +532,35 @@ class AsnPreLoadViewSet(viewsets.ModelViewSet):
 
     def create(self, request, pk):
         qs = self.get_object()
-        if qs.openid != self.request.auth.openid:
-            raise APIException({"detail": "Cannot delete data which not yours"})
-        else:
-            if qs.asn_status == 1:
-                if AsnDetailModel.objects.filter(openid=self.request.auth.openid, asn_code=qs.asn_code,
-                                                                asn_status=1, is_delete=False).exists():
-                    qs.asn_status = 2
-                    asn_detail_list = AsnDetailModel.objects.filter(openid=self.request.auth.openid, asn_code=qs.asn_code,
-                                                                    asn_status=1, is_delete=False)
-                    for i in range(len(asn_detail_list)):
-                        goods_qty_change = stocklist.objects.filter(openid=self.request.auth.openid,
-                                                                    goods_code=str(asn_detail_list[i].goods_code)).first()
-                        goods_qty_change.asn_stock = goods_qty_change.asn_stock - asn_detail_list[i].goods_qty
-                        if goods_qty_change.asn_stock < 0:
-                            goods_qty_change.asn_stock = 0
-                        goods_qty_change.pre_load_stock = goods_qty_change.pre_load_stock + asn_detail_list[i].goods_qty
-                        goods_qty_change.save()
-                    asn_detail_list.update(asn_status=2)
-                    qs.save()
-                    serializer = self.get_serializer(qs, many=False)
-                    headers = self.get_success_headers(serializer.data)
-                    return Response(serializer.data, status=200, headers=headers)
-                else:
-                    raise APIException({"detail": "Please Enter The ASN Detail"})
+        if qs.asn_status == 1:
+            if (i:=AsnDetailModel.objects.filter(openid=self.request.auth.openid, asn_code=qs.asn_code,
+                                             asn_status=1, is_delete=False)).exists():
+                data = request.data
+                if data.get("box_number", None) is None:
+                    raise APIException({"detail": "Please Enter The Box Number"})
+                if data.get("confirm_time", None) is None:
+                    raise APIException({"detail": "Please Enter The Confirm Time"})
+                i.update(box_number=data.get("box_number"), confirm_time=data.get("confirm_time"))
+                qs.asn_status = 2
+                asn_detail_list = AsnDetailModel.objects.filter(openid=self.request.auth.openid, asn_code=qs.asn_code,
+                                                                asn_status=1, is_delete=False)
+                for i in range(len(asn_detail_list)):
+                    goods_qty_change = stocklist.objects.filter(openid=self.request.auth.openid,
+                                                                goods_code=str(asn_detail_list[i].goods_code)).first()
+                    goods_qty_change.asn_stock = goods_qty_change.asn_stock - asn_detail_list[i].goods_qty
+                    if goods_qty_change.asn_stock < 0:
+                        goods_qty_change.asn_stock = 0
+                    goods_qty_change.pre_load_stock = goods_qty_change.pre_load_stock + asn_detail_list[i].goods_qty
+                    goods_qty_change.save()
+                asn_detail_list.update(asn_status=2)
+                qs.save()
+                serializer = self.get_serializer(qs, many=False)
+                headers = self.get_success_headers(serializer.data)
+                return Response(serializer.data, status=200, headers=headers)
             else:
-                raise APIException({"detail": "This ASN Status Is Not 1"})
+                raise APIException({"detail": "Please Enter The ASN Detail"})
+        else:
+            raise APIException({"detail": "This ASN Status Is Not 1"})
 
 class AsnPreSortViewSet(viewsets.ModelViewSet):
     """
