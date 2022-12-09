@@ -15,6 +15,7 @@ class AsnListModel(models.Model):
     transportation_fee = models.JSONField(default=dict, verbose_name="Transportation Fee")
     box_number = models.CharField(max_length=255, verbose_name="Box Number")
     is_delete = models.BooleanField(default=False, verbose_name='Delete Label')
+    confirm_time = models.DateTimeField(blank=True, null=True, verbose_name="Confirm Time")
     create_time = models.DateTimeField(auto_now_add=True, verbose_name="Create Time")
     update_time = models.DateTimeField(auto_now=True, blank=True, null=True, verbose_name="Update Time")
 
