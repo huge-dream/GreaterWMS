@@ -4,6 +4,12 @@
 export default {
   failed: "Action failed",
   success: "Action was successful",
+  deliveryData: {
+    box_number: '箱号',
+    box_number_placeholder: '请输入箱号',
+    confirm_time: '预计发货时间',
+    confirm_time_placeholder: '请选择预计发货时间'
+  },
   index: {
     index_title: "仓库管理平台",
     webtitle: "GreaterWMS--开源仓库管理系统",
@@ -101,7 +107,7 @@ export default {
   downloadasnlisttip: "下载到货通知书列表",
   downloadasndetailtip: "下载到货通知书明细",
   printthisasn: "查看到货通知书",
-  confirmdelivery: "确认已经到货",
+  confirmdelivery: "确认入库单",
   finishloading: "确认卸货完成",
   confirmsorted: "确认分拣完成",
   downloaddnlist: "下载列表",

@@ -118,6 +118,8 @@
               props.row.total_volume.toFixed(4)
             }}</q-td>
             <q-td key="supplier" :props="props">{{ props.row.supplier }}</q-td>
+            <q-td key="box_number" :props="props">{{ props.row.box_number }}</q-td>
+            <q-td key="confirm_time" :props="props">{{ props.row.confirm_time }}</q-td>
 
             <q-td key="creater" :props="props">{{ props.row.creater }}</q-td>
             <q-td key="create_time" :props="props">{{
@@ -920,7 +922,24 @@
         <q-card-section
           style="max-height: 325px; width: 400px"
           class="scroll"
-          >{{ $t("deletetip") }}</q-card-section
+          >
+          <q-input
+          outlined
+          v-model="deliveryData.box_number"
+          :label="$t('deliveryData.box_number')"
+          :placeholder="$t('deliveryData.box_number_placeholder')"
+        />
+          <br>
+        <q-input
+          outlined
+          v-model="deliveryData.confirm_time"
+          mask="date"
+          type="date"
+          :label="$t('deliveryData.confirm_time')"
+          :placeholder="$t('deliveryData.confirm_time_placeholder')"
+        >
+        </q-input>
+        </q-card-section
         >
         <div style="float: right; padding: 15px 15px 15px 0">
           <q-btn
@@ -1214,6 +1233,10 @@ export default {
       warehouse_detail: {},
       supplier_list: [],
       supplier_list1: [],
+      deliveryData: {
+        box_number :'',
+        confirm_time :''
+      },
       supplier_detail: {},
       columns: [
         {
@@ -1257,6 +1280,18 @@ export default {
           name: "supplier",
           label: this.$t("baseinfo.view_supplier.supplier_name"),
           field: "supplier",
+          align: "center",
+        },
+        {
+          name: "box_number",
+          label: this.$t("deliveryData.box_number"),
+          field: "box_number",
+          align: "center",
+        },
+        {
+          name: "confirm_time",
+          label: this.$t("deliveryData.confirm_time"),
+          field: "confirm_time",
           align: "center",
         },
         {
@@ -1886,7 +1921,24 @@ export default {
     },
     preloadDataSubmit() {
       var _this = this;
-      postauth(_this.pathname + "preload/" + _this.preloadid + "/", {})
+      if (!this.deliveryData.box_number) {
+        _this.$q.notify({
+          message: "Carton Number Cannot be empty",
+          icon: "close",
+          color: "negative",
+        });
+        return
+      }
+      if (!this.deliveryData.confirm_time) {
+        _this.$q.notify({
+          message: "Confirmation Time Cannot be empty",
+          icon: "close",
+          color: "negative",
+        });
+        return
+      }
+
+      postauth(_this.pathname + "preload/" + _this.preloadid + "/", {...this.deliveryData})
         .then((res) => {
           _this.table_list = [];
           _this.preloadDataCancel();

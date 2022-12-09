@@ -532,15 +532,18 @@ class AsnPreLoadViewSet(viewsets.ModelViewSet):
 
     def create(self, request, pk):
         qs = self.get_object()
+        vip_level = self.request.auth.vip
+        if vip_level != 9:
+            raise APIException({"detail": "Please use the super administrator to operate this function"})
         if qs.asn_status == 1:
-            if (i:=AsnDetailModel.objects.filter(openid=self.request.auth.openid, asn_code=qs.asn_code,
-                                             asn_status=1, is_delete=False)).exists():
+            if (i:=AsnDetailModel.objects.filter(asn_code=qs.asn_code, asn_status=1, is_delete=False)).exists():
                 data = request.data
                 if data.get("box_number", None) is None:
                     raise APIException({"detail": "Please Enter The Box Number"})
                 if data.get("confirm_time", None) is None:
                     raise APIException({"detail": "Please Enter The Confirm Time"})
-                i.update(box_number=data.get("box_number"), confirm_time=data.get("confirm_time"))
+                qs.box_number = data.get("box_number")
+                qs.confirm_time = data.get("confirm_time")
                 qs.asn_status = 2
                 asn_detail_list = AsnDetailModel.objects.filter(openid=self.request.auth.openid, asn_code=qs.asn_code,
                                                                 asn_status=1, is_delete=False)

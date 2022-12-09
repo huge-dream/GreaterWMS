@@ -4,6 +4,12 @@
 export default {
   failed: 'Action failed',
   success: 'Action was successful',
+  deliveryData: {
+    box_number: 'Carton Number',
+    box_number_placeholder: 'Please Enter Carton Number',
+    confirm_time: 'Estimated Delivery Time',
+    confirm_time_placeholder: 'Please Select Estimated Delivery Time'
+  },
   index: {
     index_title: 'Open Source Inventory System',
     webtitle: 'GreaterWMS--Open Source Warehouse Management System',
@@ -105,7 +111,7 @@ export default {
   downloadasnlisttip: 'Download All ASN List',
   downloadasndetailtip: 'Download All ASN Detail',
   printthisasn: 'Print this ASN',
-  confirmdelivery: 'Confirm Delivery',
+  confirmdelivery: 'Confirm Receipt Doc',
   finishloading: 'Finish Loading',
   confirmsorted: 'Confirm Sorted',
   downloaddnlist: 'Download List',
