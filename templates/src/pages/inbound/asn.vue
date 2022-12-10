@@ -926,7 +926,7 @@
           <q-input
           outlined
           v-model="deliveryData.box_number"
-          :label="$t('deliveryData.box_number')"
+          :hint="$t('deliveryData.box_number')"
           :placeholder="$t('deliveryData.box_number_placeholder')"
         />
           <br>
@@ -935,7 +935,7 @@
           v-model="deliveryData.confirm_time"
           mask="date"
           type="date"
-          :label="$t('deliveryData.confirm_time')"
+          :hint="$t('deliveryData.confirm_time')"
           :placeholder="$t('deliveryData.confirm_time_placeholder')"
         >
         </q-input>

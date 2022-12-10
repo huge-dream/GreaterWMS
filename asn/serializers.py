@@ -12,6 +12,7 @@ class ASNListGetSerializer(serializers.ModelSerializer):
     warehouse_id = serializers.SerializerMethodField()
     bar_code = serializers.CharField(read_only=True, required=False)
     creater = serializers.CharField(read_only=True, required=False)
+    confirm_time = serializers.DateField(read_only=True, format='%Y/%m/%d')
     create_time = serializers.DateTimeField(read_only=True, format='%Y-%m-%d %H:%M:%S')
     update_time = serializers.DateTimeField(read_only=True, format='%Y-%m-%d %H:%M:%S')
     class Meta:
