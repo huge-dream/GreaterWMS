@@ -536,7 +536,7 @@ class AsnPreLoadViewSet(viewsets.ModelViewSet):
         if vip_level != 9:
             raise APIException({"detail": "Please use the super administrator to operate this function"})
         if self.request.auth.openid != qs.openid :
-            raise APIException({"detail": "Please switch to "+ qs.warehouse_id + " warehouse operation"})
+            raise APIException({"detail": f"Please switch to {qs.warehouse_id} warehouse operation"})
         if qs.asn_status == 1:
             if (i:=AsnDetailModel.objects.filter(asn_code=qs.asn_code, asn_status=1, is_delete=False)).exists():
                 data = request.data
