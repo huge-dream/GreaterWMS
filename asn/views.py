@@ -533,6 +533,7 @@ class AsnPreLoadViewSet(viewsets.ModelViewSet):
     def create(self, request, pk):
         qs = self.get_object()
         vip_level = self.request.auth.vip
+        print("vip",  self.request.auth.vip, self.request.auth)
         if vip_level != 9:
             raise APIException({"detail": "Please use the super administrator to operate this function"})
         if self.request.auth.openid != qs.openid :

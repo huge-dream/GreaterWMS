@@ -774,7 +774,7 @@ export default {
       });
     },
     warehouseChange(record) {
-      this.useWarehouse = record.id + "-" + record.warehouse_name;
+      this.useWarehouse = record.warehouse_id + "-" + record.warehouse_name;
       this.openid = record.openid;
       LocalStorage.set("openid", record.openid);
       LocalStorage.set("useWarehouse", this.useWarehouse);
