@@ -535,6 +535,8 @@ class AsnPreLoadViewSet(viewsets.ModelViewSet):
         vip_level = self.request.auth.vip
         if vip_level != 9:
             raise APIException({"detail": "Please use the super administrator to operate this function"})
+        if self.request.auth.openid != qs.openid :
+            raise APIException({"detail": "Please switch to "+ qs.warehouse_id + " warehouse operation"})
         if qs.asn_status == 1:
             if (i:=AsnDetailModel.objects.filter(asn_code=qs.asn_code, asn_status=1, is_delete=False)).exists():
                 data = request.data
@@ -545,8 +547,7 @@ class AsnPreLoadViewSet(viewsets.ModelViewSet):
                 qs.box_number = data.get("box_number")
                 qs.confirm_time = data.get("confirm_time")
                 qs.asn_status = 2
-                asn_detail_list = AsnDetailModel.objects.filter(openid=self.request.auth.openid, asn_code=qs.asn_code,
-                                                                asn_status=1, is_delete=False)
+                asn_detail_list = AsnDetailModel.objects.filter(asn_code=qs.asn_code, asn_status=1, is_delete=False)
                 for i in range(len(asn_detail_list)):
                     goods_qty_change = stocklist.objects.filter(openid=self.request.auth.openid,
                                                                 goods_code=str(asn_detail_list[i].goods_code)).first()
