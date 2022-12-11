@@ -78,7 +78,7 @@ class DnListViewSet(viewsets.ModelViewSet):
             if vip_level == 9:
                 pass
             else:
-                query_dict['openid'] = self.request.auth.openid    
+                query_dict['openid'] = self.request.auth.openid
             if id is not None:
                 query_dict['id'] = id
             return DnListModel.objects.filter(Q(**query_dict) & ~Q(customer=''))
@@ -126,23 +126,25 @@ class DnListViewSet(viewsets.ModelViewSet):
 
     def destroy(self, request, pk):
         qs = self.get_object()
-        if qs.openid != self.request.auth.openid:
-            raise APIException({"detail": "Cannot delete data which not yours"})
+        # if qs.openid != self.request.auth.openid:
+        #     raise APIException({"detail": "Cannot delete data which not yours"})
+        vip_level = self.request.auth.vip
+        if vip_level != 9:
+            raise APIException({"detail": "Please switch to all warehouse for operation"})
+        if qs.dn_status == 1:
+            qs.is_delete = True
+            dn_detail_list = DnDetailModel.objects.filter(openid=self.request.auth.openid, dn_code=qs.dn_code,
+                                          dn_status=1, is_delete=False)
+            for i in range(len(dn_detail_list)):
+                goods_qty_change = stocklist.objects.filter(openid=self.request.auth.openid,
+                                                            goods_code=str(dn_detail_list[i].goods_code)).first()
+                goods_qty_change.dn_stock = goods_qty_change.dn_stock - int(dn_detail_list[i].goods_qty)
+                goods_qty_change.save()
+            dn_detail_list.update(is_delete=True)
+            qs.save()
+            return Response({"detail": "success"}, status=200)
         else:
-            if qs.dn_status == 1:
-                qs.is_delete = True
-                dn_detail_list = DnDetailModel.objects.filter(openid=self.request.auth.openid, dn_code=qs.dn_code,
-                                              dn_status=1, is_delete=False)
-                for i in range(len(dn_detail_list)):
-                    goods_qty_change = stocklist.objects.filter(openid=self.request.auth.openid,
-                                                                goods_code=str(dn_detail_list[i].goods_code)).first()
-                    goods_qty_change.dn_stock = goods_qty_change.dn_stock - int(dn_detail_list[i].goods_qty)
-                    goods_qty_change.save()
-                dn_detail_list.update(is_delete=True)
-                qs.save()
-                return Response({"detail": "success"}, status=200)
-            else:
-                raise APIException({"detail": "This order has Confirmed or Deliveried"})
+            raise APIException({"detail": "This order has Confirmed or Deliveried"})
 
 class DnDetailViewSet(viewsets.ModelViewSet):
     """
