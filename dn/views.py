@@ -201,6 +201,10 @@ class DnDetailViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         data = self.request.data
+        vip_level = self.request.auth.vip
+        if vip_level != 9:
+            raise APIException({"detail": "Please switch to all warehouse for operation"})
+
         if DnListModel.objects.filter(openid=self.request.auth.openid, dn_code=str(data['dn_code']), is_delete=False).exists():
             if customer.objects.filter(customer_name=str(data['customer']), is_delete=False).exists():
                 staff_name = staff.objects.filter(openid=self.request.auth.openid,
