@@ -254,7 +254,8 @@
                   $q.localStorage.getItem('staff_type') !== 'Supplier' &&
                   $q.localStorage.getItem('staff_type') !== 'Customer' &&
                   $q.localStorage.getItem('staff_type') !== 'Outbound' &&
-                  $q.localStorage.getItem('staff_type') !== 'StockControl'
+                  $q.localStorage.getItem('staff_type') !== 'StockControl' &&
+                  $q.localStorage.getItem('is_vip') === 9
                 "
                 round
                 flat
