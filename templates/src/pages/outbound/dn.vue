@@ -24,7 +24,8 @@
                 $q.localStorage.getItem('staff_type') !== 'Supplier' &&
                 $q.localStorage.getItem('staff_type') !== 'Customer' &&
                 $q.localStorage.getItem('staff_type') !== 'Inbound' &&
-                $q.localStorage.getItem('staff_type') !== 'StockControl'
+                $q.localStorage.getItem('staff_type') !== 'StockControl' &&
+                $q.localStorage.getItem('is_vip') === 9
               "
               :label="$t('new')"
               icon="add"
@@ -323,7 +324,8 @@
                   $q.localStorage.getItem('staff_type') !== 'Supplier' &&
                   $q.localStorage.getItem('staff_type') !== 'Customer' &&
                   $q.localStorage.getItem('staff_type') !== 'Inbound' &&
-                  $q.localStorage.getItem('staff_type') !== 'StockControl'
+                  $q.localStorage.getItem('staff_type') !== 'StockControl' &&
+                  $q.localStorage.getItem('is_vip') === 9
                 "
                 round
                 flat
