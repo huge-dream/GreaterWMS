@@ -128,6 +128,9 @@ class AsnListViewSet(viewsets.ModelViewSet):
 
     def destroy(self, request, pk):
         qs = self.get_object()
+        # u = Users.objects.filter(vip=9).first()
+        # if qs.openid != self.request.auth.openid and u.pk != self.request.user.pk:
+        #     raise APIException({"detail": "Cannot delete data which not yours"})
         if qs.openid != self.request.auth.openid:
             raise APIException({"detail": "Cannot delete data which not yours"})
         else:

@@ -1183,11 +1183,15 @@ class DnlistfileaddViewSet(views.APIView):
                             continue
                         if not is_number(str(data_list[i][1])):
                             data_list[i][1] = 0
+                        if is_number(data_list[i][2]):
+                            data_list[i][2] = str(int(data_list[i][2]))
+                        else:
+                            data_list[i][2] = str(data_list[i][2])
                         if (w := warehouse.objects.filter(warehouse_id=str(data_list[i][2]))).exists():
                             warehouse_openid = w.first().openid
                             warehouse_pk = w.first().pk
                         else:
-                            raise APIException({"detail": "Warehouse Id {} is not exists".format(str(data_list[i][2]))})
+                            raise APIException({"detail": "Warehouse Id {} is not exists".format(data_list[i][2])})
                         customer_name = customer.objects.all().first().customer_name
                         qs_set = DnListModel.objects.filter(openid=warehouse_openid, is_delete=False)
                         order_day = str(timezone.now().strftime('%Y%m%d'))
