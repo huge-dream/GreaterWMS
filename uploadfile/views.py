@@ -957,7 +957,11 @@ class AsnlistfileAddViewSet(views.APIView):
                             raise APIException({"detail": "Warehouse Id is not exists"})
                         if str(data_list[i][3]) == 'nan':
                             data_list[i][3] = str(dt.strftime('%Y%m%d%H%M%S%f'))
-                        if (w:=warehouse.objects.filter(warehouse_id=str(data_list[i][4]))).exists():
+                        if is_number(data_list[i][4]):
+                            data_list[i][4] = str(int(data_list[i][4]))
+                        else:
+                            data_list[i][4] = str(data_list[i][4])
+                        if (w:=warehouse.objects.filter(warehouse_id=data_list[i][4])).exists():
                             warehouse_openid = w.first().openid
                             warehouse_pk = w.first().pk
                         else:
