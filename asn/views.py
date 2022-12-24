@@ -474,6 +474,7 @@ class AsnViewPrintViewSet(viewsets.ModelViewSet):
                 query_data['openid'] = self.request.auth.openid
             asn_detail_list = AsnDetailModel.objects.filter(**query_data,
                                                             asn_code=qs.asn_code,
+                                                            asn_status__lt=5,
                                                             is_delete=False)
             asn_detail = serializers.ASNDetailGetSerializer(asn_detail_list, many=True)
             supplier_detail = supplier.objects.filter(supplier_name=qs.supplier).first()
