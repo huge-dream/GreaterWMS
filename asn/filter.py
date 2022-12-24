@@ -24,7 +24,7 @@ class AsnDetailFilter(FilterSet):
         fields = {
             "id": ['exact', 'gt', 'gte', 'lt', 'lte', 'isnull', 'in', 'range'],
             "asn_code": ['exact', 'iexact', 'contains', 'icontains'],
-            "asn_status": ['exact', 'iexact'],
+            "asn_status": ['exact', 'iexact', 'lt'],
             "supplier": ['exact', 'iexact', 'contains', 'icontains'],
             "goods_code": ['exact', 'iexact', 'contains', 'icontains'],
             "goods_desc": ['exact', 'iexact', 'contains', 'icontains'],
