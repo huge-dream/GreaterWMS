@@ -1178,6 +1178,7 @@ class DnlistfileaddViewSet(views.APIView):
                     for d in range(len(data_list)):
                         data_validate(str(data_list[d]))
                     data = self.request.data
+                    warehouse_dict = {}
                     for i in range(len(data_list)):
                         if str(data_list[i][0]) == 'nan':
                             continue
@@ -1187,33 +1188,39 @@ class DnlistfileaddViewSet(views.APIView):
                             data_list[i][2] = str(int(data_list[i][2]))
                         else:
                             data_list[i][2] = str(data_list[i][2])
-                        if (w := warehouse.objects.filter(warehouse_id=str(data_list[i][2]))).exists():
-                            warehouse_openid = w.first().openid
-                            warehouse_pk = w.first().pk
+
+                        if data_list[i][2] in warehouse_dict: # 判断前面是否也有相同仓库的dnlist obj
+                            data['dn_code'] = warehouse_dict[data_list[i][2]]
                         else:
-                            raise APIException({"detail": "Warehouse Id {} is not exists".format(data_list[i][2])})
-                        customer_name = customer.objects.all().first().customer_name
-                        qs_set = DnListModel.objects.filter(openid=warehouse_openid, is_delete=False)
-                        order_day = str(timezone.now().strftime('%Y%m%d'))
-                        if len(qs_set) > 0:
-                            dn_last_code = qs_set.order_by('-id').first().dn_code
-                            if dn_last_code[2:10] == order_day:
-                                order_create_no = str(int(dn_last_code[10:]) + 1)
-                                data['dn_code'] = 'DN' + order_day + order_create_no
+                            if (w := warehouse.objects.filter(warehouse_id=data_list[i][2])).exists():
+                                warehouse_openid = w.first().openid
+                                warehouse_pk = w.first().pk
+                            else:
+                                raise APIException({"detail": "Warehouse Id {} is not exists".format(data_list[i][2])})
+                            customer_name = customer.objects.all().first().customer_name
+                            qs_set = DnListModel.objects.filter(openid=warehouse_openid, is_delete=False)
+                            order_day = str(timezone.now().strftime('%Y%m%d'))
+                            if len(qs_set) > 0:
+                                dn_last_code = qs_set.order_by('-id').first().dn_code
+                                if dn_last_code[2:10] == order_day:
+                                    order_create_no = str(int(dn_last_code[10:]) + 1)
+                                    data['dn_code'] = 'DN' + order_day + order_create_no
+                                else:
+                                    data['dn_code'] = 'DN' + order_day + '1'
                             else:
                                 data['dn_code'] = 'DN' + order_day + '1'
-                        else:
-                            data['dn_code'] = 'DN' + order_day + '1'
-                        data['openid'] = warehouse_openid
-                        data['bar_code'] = Md5.md5(str(data['dn_code']))
-                        data['warehouse_id'] = warehouse_pk
-                        data['customer'] = customer_name
-                        data['creater'] = str(staff_name)
-                        serializer = DNListPostSerializer(data=data)
-                        serializer.is_valid(raise_exception=True)
-                        serializer.save()
-                        # print('dnlist saved, dn code is', data['dn_code'], '  |||||   warehouse is', (data['warehouse_id'], data['openid']))
-                        scanner.objects.create(openid=warehouse_openid, mode="DN", code=data['dn_code'], bar_code=data['bar_code'])
+                            data['openid'] = warehouse_openid
+                            data['bar_code'] = Md5.md5(str(data['dn_code']))
+                            data['warehouse_id'] = warehouse_pk
+                            data['customer'] = customer_name
+                            data['creater'] = str(staff_name)
+                            serializer = DNListPostSerializer(data=data)
+                            serializer.is_valid(raise_exception=True)
+                            serializer.save()
+                            # print('dnlist saved, dn code is', data['dn_code'], '  |||||   warehouse is', (data['warehouse_id'], data['openid']))
+                            scanner.objects.create(openid=warehouse_openid, mode="DN", code=data['dn_code'], bar_code=data['bar_code'])
+                            warehouse_dict[data_list[i][2]] = data['dn_code']
+
                         n = 'N/A'
                         if goodslist.objects.filter(goods_code=str(data_list[i][0]).strip()).exists():
                             pass
