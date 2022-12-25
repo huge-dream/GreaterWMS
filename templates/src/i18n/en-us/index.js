@@ -124,6 +124,7 @@ export default {
   print: 'Print Picking List',
   printthisdn: 'Print this DN',
   confirmorder: 'Confirm Order',
+  batch_confirmorder: 'All Confirm Order',
   confirmpicked: 'Confirm Picked',
   dispatch: 'Dispatch & Shipping',
   deletebackorder: 'Delete Back Order',

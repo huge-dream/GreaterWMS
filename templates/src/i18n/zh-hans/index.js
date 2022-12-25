@@ -120,6 +120,7 @@ export default {
   print: "下载拣货单",
   printthisdn: "查看和打印发货单",
   confirmorder: "确认订单",
+  batch_confirmorder: "全部确认订单",
   confirmpicked: "确认拣货完成",
   dispatch: "装车发货",
   deletebackorder: "删除欠货订单",
