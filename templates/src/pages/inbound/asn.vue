@@ -2083,6 +2083,9 @@ export default {
             _this.sortedForm = true;
             _this.sortedid = e.id;
             _this.sorted_list.goodsData = res.results;
+            _this.sorted_list.goodsData.forEach(item => {
+              item.goods_actual_qty = item.goods_qty
+            })
           }
         );
       }
