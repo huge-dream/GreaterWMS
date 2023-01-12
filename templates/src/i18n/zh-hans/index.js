@@ -143,6 +143,7 @@ export default {
     },
     view_supplier: {
       supplier_name: "供应商名称",
+      total_quantity: "总数量",
       supplier_city: "所在城市",
       supplier_address: "地址",
       supplier_contact: "联系方式",

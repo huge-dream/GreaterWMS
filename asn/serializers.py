@@ -15,6 +15,7 @@ class ASNListGetSerializer(serializers.ModelSerializer):
     confirm_time = serializers.DateField(read_only=True, format='%Y/%m/%d')
     create_time = serializers.DateTimeField(read_only=True, format='%Y-%m-%d %H:%M:%S')
     update_time = serializers.DateTimeField(read_only=True, format='%Y-%m-%d %H:%M:%S')
+    total_quantity = serializers.SerializerMethodField()
     class Meta:
         model = AsnListModel
         exclude = ['openid', 'is_delete', ]
@@ -22,6 +23,8 @@ class ASNListGetSerializer(serializers.ModelSerializer):
 
     def get_warehouse_id(self, obj):
         return warehouse.objects.filter(pk=obj.warehouse_id).first().warehouse_id
+    def get_total_quantity(self, obj):
+        return AsnDetailModel.objects.filter(asn_code=obj.asn_code).count()
 
 class ASNListPostSerializer(serializers.ModelSerializer):
     openid = serializers.CharField(read_only=False, required=False, validators=[datasolve.openid_validate])

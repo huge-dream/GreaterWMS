@@ -117,7 +117,7 @@
             <q-td key="total_volume" :props="props">{{
               props.row.total_volume.toFixed(4)
             }}</q-td>
-            <q-td key="supplier" :props="props">{{ props.row.supplier }}</q-td>
+            <q-td key="total_quantity" :props="props">{{ props.row.total_quantity }}</q-td>
             <q-td key="box_number" :props="props">{{ props.row.box_number }}</q-td>
             <q-td key="confirm_time" :props="props">{{ props.row.confirm_time }}</q-td>
 
@@ -1278,9 +1278,9 @@ export default {
           align: "center",
         },
         {
-          name: "supplier",
-          label: this.$t("baseinfo.view_supplier.supplier_name"),
-          field: "supplier",
+          name: "total_quantity",
+          label: this.$t("baseinfo.view_supplier.total_quantity"),
+          field: "total_quantity",
           align: "center",
         },
         {
