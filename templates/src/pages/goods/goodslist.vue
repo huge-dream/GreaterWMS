@@ -120,7 +120,7 @@
             </template>
             <template v-else-if="props.row.id !== editid">
               <q-td key="goods_weight" :props="props">{{
-                props.row.goods_weight / 1000
+                props.row.goods_weight
               }}</q-td>
             </template>
             <template v-if="props.row.id === editid">
