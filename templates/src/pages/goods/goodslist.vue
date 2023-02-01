@@ -138,7 +138,7 @@
             </template>
             <template v-else-if="props.row.id !== editid">
               <q-td key="goods_w" :props="props">{{
-                props.row.goods_w / 10
+                props.row.goods_w
               }}</q-td>
             </template>
             <template v-if="props.row.id === editid">
@@ -156,7 +156,7 @@
             </template>
             <template v-else-if="props.row.id !== editid">
               <q-td key="goods_d" :props="props">{{
-                props.row.goods_d / 10
+                props.row.goods_d
               }}</q-td>
             </template>
             <template v-if="props.row.id === editid">
@@ -174,7 +174,7 @@
             </template>
             <template v-else-if="props.row.id !== editid">
               <q-td key="goods_h" :props="props">{{
-                props.row.goods_h / 10
+                props.row.goods_h
               }}</q-td>
             </template>
             <q-td key="unit_volume" :props="props">{{
