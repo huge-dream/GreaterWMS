@@ -67,10 +67,10 @@ def file_headers_list():
 
 def cn_data_header_list():
     return dict([
-        ('goods_code', u'商品编码'),
+        ('goods_code', u'SKU'),
         ('goods_desc', u'商品描述'),
-        ('goods_qty', u'商品数量'),
-        ('onhand_stock', u'现有库存'),
+        ('goods_qty', u'总数量'),
+        ('onhand_stock', u'现有数量'),
         ('can_order_stock', u'可被下单数量'),
         ('ordered_stock', u'已被下单数量'),
         ('inspect_stock', u'质检库存'),
