@@ -505,7 +505,8 @@ class GoodlistfileAddViewSet(views.APIView):
                 else:
                     df = pd.read_excel(files)
                 df.drop_duplicates(keep='first', inplace=True)
-                data_list = df.drop_duplicates(subset=[data_header.get('SKU')], keep='first').values
+                print(1,data_header)
+                data_list = df.drop_duplicates(subset=[data_header.get('goods_code')], keep='first').values
                 for d in range(len(data_list)):
                     data_validate(str(data_list[d]))
                 for i in range(len(data_list)):
@@ -930,7 +931,7 @@ class AsnlistfileAddViewSet(views.APIView):
         data_header = self.get_lang()
         files = self.request.FILES.get('file')
         if files:
-            from datetime import datetime 
+            from datetime import datetime
             dt = datetime.now()
             excel_type = files.name.split('.')[1]
             staff_name = staff.objects.filter(id=self.request.META.get('HTTP_OPERATOR')).first().staff_name
@@ -994,7 +995,7 @@ class AsnlistfileAddViewSet(views.APIView):
                             serializer = ASNListPostSerializer(data=data)
                             serializer.is_valid(raise_exception=True)
                             serializer.save()
-                            scanner.objects.create(openid=warehouse_openid, mode="ASN", code=data['asn_code'], 
+                            scanner.objects.create(openid=warehouse_openid, mode="ASN", code=data['asn_code'],
                                                 bar_code=data['bar_code'])
                         n = 'N/A'
                         if goodslist.objects.filter(goods_code=str(data_list[i][1]).strip(), is_delete=False).exists():
