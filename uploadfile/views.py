@@ -505,7 +505,6 @@ class GoodlistfileAddViewSet(views.APIView):
                 else:
                     df = pd.read_excel(files)
                 df.drop_duplicates(keep='first', inplace=True)
-                print(1,data_header)
                 data_list = df.drop_duplicates(subset=[data_header.get('goods_code')], keep='first').values
                 for d in range(len(data_list)):
                     data_validate(str(data_list[d]))
