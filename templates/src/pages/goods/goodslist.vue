@@ -448,44 +448,22 @@
     <template>
       <div class="q-pa-lg flex flex-center">
         <q-btn
-          v-show="pathname_previous"
-          flat
-          push
-          color="purple"
-          :label="$t('previous')"
-          icon="navigate_before"
-          @click="getListPrevious()"
-        >
-          <q-tooltip
-            content-class="bg-amber text-black shadow-4"
-            :offset="[10, 10]"
-            content-style="font-size: 12px"
-            >{{ $t("previous") }}</q-tooltip
-          >
-        </q-btn>
-        <q-btn
-          v-show="pathname_next"
-          flat
-          push
-          color="purple"
-          :label="$t('next')"
-          icon-right="navigate_next"
-          @click="getListNext()"
-        >
-          <q-tooltip
-            content-class="vbg-amber text-black shadow-4"
-            :offset="[10, 10]"
-            content-style="font-size: 12px"
-            >{{ $t("next") }}</q-tooltip
-          >
-        </q-btn>
-        <q-btn
-          v-show="!pathname_previous && !pathname_next"
+          v-show="page_count===0"
           flat
           push
           color="dark"
           :label="$t('no_data')"
         ></q-btn>
+        <q-pagination
+          v-show="page_count!==0"
+          v-model="current"
+          color="purple"
+          :max="Math.ceil(page_count / 30 ) "
+          :max-pages="30"
+          boundary-numbers
+          direction-links
+          @input="getList()"
+        />
       </div>
     </template>
     <q-dialog v-model="newForm">
@@ -787,6 +765,8 @@ export default {
   name: "Pagegoodslist",
   data() {
     return {
+      current: 1,
+      page_count: 0,
       isVip9: LocalStorage.getItem("is_vip") || "",
       goods_code: "",
       goods_desc: "",
@@ -989,8 +969,9 @@ export default {
   methods: {
     getList() {
       var _this = this;
-      getauth(_this.pathname, {})
+      getauth(_this.pathname + '?page='+this.current, {})
         .then((res) => {
+          _this.page_count = res.count;
           _this.table_list = res.results;
           _this.goods_unit_list = res.goods_unit_list;
           _this.goods_class_list = res.goods_class_list;
@@ -1014,8 +995,9 @@ export default {
     getSearchList() {
       var _this = this;
       if (LocalStorage.has("auth")) {
-        getauth(_this.pathname + "?goods_desc__icontains=" + _this.filter, {})
+        getauth(_this.pathname + "?goods_desc__icontains=" + _this.filter + '&page='+this.current, {})
           .then((res) => {
+            _this.page_count = res.count;
             _this.table_list = res.results;
             _this.goods_unit_list = res.goods_unit_list;
             _this.goods_class_list = res.goods_class_list;

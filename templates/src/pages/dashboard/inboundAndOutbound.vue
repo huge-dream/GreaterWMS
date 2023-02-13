@@ -73,44 +73,22 @@
     <template>
       <div class="q-pa-lg flex flex-center">
         <q-btn
-          v-show="pathname_previous"
-          flat
-          push
-          color="purple"
-          :label="$t('previous')"
-          icon="navigate_before"
-          @click="getListPrevious()"
-        >
-          <q-tooltip
-            content-class="bg-amber text-black shadow-4"
-            :offset="[10, 10]"
-            content-style="font-size: 12px"
-            >{{ $t("previous") }}</q-tooltip
-          >
-        </q-btn>
-        <q-btn
-          v-show="pathname_next"
-          flat
-          push
-          color="purple"
-          :label="$t('next')"
-          icon-right="navigate_next"
-          @click="getListNext()"
-        >
-          <q-tooltip
-            content-class="bg-amber text-black shadow-4"
-            :offset="[10, 10]"
-            content-style="font-size: 12px"
-            >{{ $t("next") }}</q-tooltip
-          >
-        </q-btn>
-        <q-btn
-          v-show="!pathname_previous && !pathname_next"
+          v-show="page_count===0"
           flat
           push
           color="dark"
           :label="$t('no_data')"
         ></q-btn>
+        <q-pagination
+          v-show="page_count!==0"
+          v-model="current"
+          color="purple"
+          :max="Math.ceil(page_count / 30 ) "
+          :max-pages="30"
+          boundary-numbers
+          direction-links
+          @input="getList()"
+        />
       </div>
     </template>
   </div>
@@ -124,6 +102,8 @@ export default {
   name: "PageInbAndOutb",
   data() {
     return {
+      current: 1,
+      page_count: 0,
       login_name: "",
       authin: "0",
       pathname: "dashboard/",
@@ -203,8 +183,9 @@ export default {
   methods: {
     getList() {
       var _this = this;
-      getauth("cyclecount/qtyrecorviewset/", {})
+      getauth("cyclecount/qtyrecorviewset/" + '?page='+this.current, {})
         .then((res) => {
+          _this.page_count = res.count;
           _this.table_list = res.results;
           _this.pathname_previous = res.previous;
           _this.pathname_next = res.next;
@@ -220,10 +201,11 @@ export default {
     getSearchList() {
       var _this = this;
       getauth(
-        "cyclecount/qtyrecorviewset/?goods_code__icontains=" + _this.filter,
+        "cyclecount/qtyrecorviewset/?goods_code__icontains=" + _this.filter + '&page='+this.current,
         {}
       )
         .then((res) => {
+          _this.page_count = res.count;
           _this.table_list = res.results;
           _this.pathname_previous = res.previous;
           _this.pathname_next = res.next;
