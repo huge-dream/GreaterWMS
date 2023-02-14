@@ -1491,7 +1491,7 @@ export default {
       var _this = this;
       if (LocalStorage.has("auth")) {
         getauth(
-          _this.pathname + "list/?asn_code__icontains=" + _this.filter + '&page='+this.current,
+          _this.pathname + "list/?search=" + _this.filter + '&page='+this.current,
           {}
         )
           .then((res) => {

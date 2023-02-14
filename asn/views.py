@@ -81,7 +81,12 @@ class AsnListViewSet(viewsets.ModelViewSet):
                 query_dict['openid'] = self.request.auth.openid
             if id is not None:
                 query_dict['id'] = id
-            return AsnListModel.objects.filter(Q(**query_dict) & ~Q(supplier=''))
+            search = self.request.query_params.get('search')
+            obj = AsnListModel.objects.filter(Q(**query_dict) & ~Q(supplier=''))
+            if search:
+                obj = obj.filter(Q(Q(asn_code__icontains=search) | Q(patch_number__icontains=search) | Q(
+                    box_number__icontains=search)))
+            return obj
         else:
             return AsnListModel.objects.none()
 
