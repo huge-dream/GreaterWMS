@@ -462,7 +462,7 @@
           :max-pages="30"
           boundary-numbers
           direction-links
-          @input="getList()"
+          @click="getList()"
         />
       </div>
     </template>

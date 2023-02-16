@@ -72,7 +72,7 @@
             :max-pages="30"
             boundary-numbers
             direction-links
-            @input="getList()"
+            @click="getList()"
           />
           <q-btn v-show="page_count===0" flat push color="dark" :label="$t('no_data')"></q-btn>
         </div>
