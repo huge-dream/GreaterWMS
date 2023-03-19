@@ -210,6 +210,11 @@ class AsnDetailViewSet(viewsets.ModelViewSet):
         else:
             return self.http_method_not_allowed(request=self.request)
 
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(data={"results": serializer.data,"count": len(serializer.data), "next": "","previous" :""})
+
     def create(self, request, *args, **kwargs):
         data = self.request.data
         if AsnListModel.objects.filter(openid=self.request.auth.openid, asn_code=str(data['asn_code']), is_delete=False).exists():
