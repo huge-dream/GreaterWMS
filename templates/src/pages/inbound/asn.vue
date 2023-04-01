@@ -1687,6 +1687,7 @@ export default {
       if (!cancelRequest) {
         postauth(_this.pathname + "detail/", {
           ..._this.newFormData,
+          page_size: 1000,
           warehouse_id: _this.warehouseId,
         })
           .then((res) => {
