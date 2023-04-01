@@ -1748,7 +1748,7 @@ export default {
         _this.newFormData.supplier = e.supplier;
         _this.newFormData.patch_number = e.patch_number;
         _this.warehouseId = e.warehouse_id;
-        getauth(_this.pathname + "detail/?asn_code=" + e.asn_code).then(
+        getauth(_this.pathname + "detail/?page_size=1000&asn_code=" + e.asn_code).then(
           (res) => {
             _this.newForm = true;
             _this.editid = e.id;
