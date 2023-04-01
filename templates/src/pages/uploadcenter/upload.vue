@@ -5,13 +5,13 @@
         <div class="q-gutter-y-md" style="max-width: 100%">
           <q-tabs v-model="detaillink">
             <transition appear enter-active-class="animated zoomIn">
-              <q-route-tab
-                name="initializeupload"
-                :label="$t('upload_center.initializeupload')"
-                icon="img:statics/uploadcenter/uploadinbound.png"
-                :to="{ name: 'initializeupload' }"
-                exact
-              />
+              //<q-route-tab
+                //name="initializeupload"
+                //:label="$t('upload_center.initializeupload')"
+                //icon="img:statics/uploadcenter/uploadinbound.png"
+                //:to="{ name: 'initializeupload' }"
+                //exact
+              ///>
             </transition>
             <transition appear enter-active-class="animated zoomIn">
               <q-route-tab
@@ -35,7 +35,7 @@ export default {
   name: 'upload',
   data () {
     return {
-      detaillink: 'initializeupload'
+      detaillink: 'addupload'
     }
   }
 }

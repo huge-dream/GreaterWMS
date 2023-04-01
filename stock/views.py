@@ -15,6 +15,7 @@ from django.http import StreamingHttpResponse
 from .files import FileListRenderCN, FileListRenderEN, FileBinListRenderCN, FileBinListRenderEN
 from rest_framework.settings import api_settings
 from userprofile.models import Users
+from django.db.models import Q
 
 class StockListViewSet(viewsets.ModelViewSet):
     """

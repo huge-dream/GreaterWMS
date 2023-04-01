@@ -207,22 +207,9 @@ export default {
     getSearchList () {
       var _this = this
       if (LocalStorage.has('auth')) {
-        getauth(_this.pathname + '?bin_name__icontains=' + _this.filter, {})
+        getauth(_this.pathname + '?ordering=-update_time' + '&goods_code__icontains=' + _this.filter, {})
           .then(res => {
             _this.table_list = res.results
-            if (LocalStorage.getItem('lang') === 'zh-hans') {
-              _this.table_list.forEach((item, index) => {
-                if (item.bin_property === 'Damage') {
-                  item.bin_property = '破损'
-                } else if (item.bin_property === 'Inspection') {
-                  item.bin_property = '质检'
-                } else if (item.bin_property === 'Holding') {
-                  item.bin_property = '锁货'
-                } else if (item.bin_property === 'Normal') {
-                  item.bin_property = '正常库位'
-                }
-              })
-            }
             _this.pathname_previous = res.previous
             _this.pathname_next = res.next
           })

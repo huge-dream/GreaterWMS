@@ -1709,6 +1709,7 @@ class DnPickedViewSet(viewsets.ModelViewSet):
         if qs.dn_status != 3:
             raise APIException({"detail": "This dn Status Not Pre Pick"})
         else:
+            print(data['goodsData'], len(data['goodsData']))
             for i in range(len(data['goodsData'])):
                 pick_qty_change = PickingListModel.objects.filter(openid=self.request.auth.openid,
                                                                   dn_code=str(data['dn_code']),

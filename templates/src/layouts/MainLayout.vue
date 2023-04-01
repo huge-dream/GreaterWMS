@@ -248,12 +248,12 @@
             </q-btn>
           </transition>
           <transition appear enter-active-class="animated zoomIn">
-            <q-btn
-              :label="$t('index.register')"
-              color="primary"
-              @click="register = true"
-              style="margin-left: 10px"
-            >
+            //<q-btn
+              //:label="$t('index.register')"
+              //color="primary"
+              //@click="register = true"
+              //style="margin-left: 10px"
+            //>
               <q-tooltip
                 content-class="bg-amber text-black shadow-4"
                 :offset="[15, 15]"
@@ -416,7 +416,7 @@
           <q-item
             v-if="isVip9 === 9"
             clickable
-            :to="{ name: 'initializeupload' }"
+            :to="{ name: 'addupload' }"
             @click="linkChange('uploadcenter')"
             v-ripple
             exact
@@ -1075,3 +1075,4 @@ export default {
   bottom: 8px;
 }
 </style>
+

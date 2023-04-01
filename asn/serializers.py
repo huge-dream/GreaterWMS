@@ -28,7 +28,9 @@ class ASNListGetSerializer(serializers.ModelSerializer):
         return warehouse.objects.filter(pk=obj.warehouse_id).first().warehouse_id
 
     def get_total_quantity(self, obj):
-        data = AsnDetailModel.objects.filter(asn_code=obj.asn_code).aggregate(
+        # data = AsnDetailModel.objects.filter(asn_code=obj.asn_code).aggregate(
+            # sum_total_quantity=Sum('goods_qty'))
+        data = AsnDetailModel.objects.filter(asn_code=obj.asn_code).exclude(is_delete=1).aggregate(
             sum_total_quantity=Sum('goods_qty'))
         if data:
             return data.get('sum_total_quantity')

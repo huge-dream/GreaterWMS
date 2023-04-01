@@ -19,15 +19,15 @@ class MyPageNumberPaginationASNList(PageNumberPagination):
             return None
         url = self.request.build_absolute_uri()
         page_number = self.page.previous_page_number()
-        ssl_check = str(self.request.META.get('HTTP_ORIGIN')).split(':')[0]
-        url_combine = str(url).split(':')
-        if len(str(url).split(':')) == 2:
-            url = ssl_check + ':' + url_combine[1]
+        ssl_check = str(self.request.META.get('HTTP_ORIGIN')).split('://')[0]
+        url_combine = str(url).split('://')
+        if len(str(url).split('://')) == 2:
+            url = ssl_check + '://' + url_combine[1]
             if page_number == 1:
                 return remove_query_param(url, self.page_query_param)
             return replace_query_param(url, self.page_query_param, page_number)
-        elif len(str(url).split(':')) == 3:
-            url = ssl_check + ':' + url_combine[1] + ':' + url_combine[2]
+        elif len(str(url).split('://')) == 3:
+            url = ssl_check + '://' + url_combine[1] + ':' + url_combine[2]
             if page_number == 1:
                 return remove_query_param(url, self.page_query_param)
             return replace_query_param(url, self.page_query_param, page_number)
@@ -39,13 +39,13 @@ class MyPageNumberPaginationASNList(PageNumberPagination):
             return None
         url = self.request.build_absolute_uri()
         page_number = self.page.next_page_number()
-        ssl_check = str(self.request.META.get('HTTP_ORIGIN')).split(':')[0]
-        url_combine = str(url).split(':')
-        if len(str(url).split(':')) == 2:
-            url = ssl_check + ':' + url_combine[1]
+        ssl_check = str(self.request.META.get('HTTP_ORIGIN')).split('://')[0]
+        url_combine = str(url).split('://')
+        if len(str(url).split('://')) == 2:
+            url = ssl_check + '://' + url_combine[1]
             return replace_query_param(url, self.page_query_param, page_number)
-        elif len(str(url).split(':')) == 3:
-            url = ssl_check + ':' + url_combine[1] + ':' + url_combine[2]
+        elif len(str(url).split('://')) == 3:
+            url = ssl_check + '://' + url_combine[1] + ':' + url_combine[2]
             return replace_query_param(url, self.page_query_param, page_number)
         else:
             raise APIException({"detail": "Wrong API Url"})

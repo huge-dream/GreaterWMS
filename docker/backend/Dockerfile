@@ -22,5 +22,5 @@ RUN pip3 install eventlet
 RUN pip3 install greenlet
 RUN pip3 install pandas
 RUN pip3 install SQLAlchemy
-RUN pip3 install -r requirements.txt
+RUN pip3 install -r requirements.txt -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
 EXPOSE 8008

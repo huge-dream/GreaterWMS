@@ -378,7 +378,7 @@ const routes = [
                 path: "initializeupload",
                 name: "initializeupload",
                 component: () =>
-                  import("pages/uploadcenter/initializeupload.vue"),
+                  import("pages/uploadcenter/addupload.vue"),
               },
               {
                 path: "addupload",

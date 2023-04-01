@@ -1491,7 +1491,7 @@ export default {
       var _this = this;
       if (LocalStorage.has("auth")) {
         getauth(
-          _this.pathname + "list/?search=" + _this.filter + '&page='+this.current,
+          _this.pathname + "list/?search=" + _this.filter + '&page='+ this.current,
           {}
         )
           .then((res) => {
@@ -2064,6 +2064,7 @@ export default {
           (res) => {
             _this.sortedForm = true;
             _this.sortedid = e.id;
+            // TODO 这里会引起一个数据量为0的BUG
             _this.sorted_list.goodsData = res.results;
             _this.sorted_list.goodsData.forEach(item => {
               item.goods_actual_qty = item.goods_qty
