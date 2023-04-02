@@ -2061,7 +2061,7 @@ export default {
       } else {
         _this.sorted_list.asn_code = e.asn_code;
         _this.sorted_list.supplier = e.supplier;
-        getauth(_this.pathname + "detail/?max_page=1000&asn_code=" + e.asn_code).then(
+        getauth(_this.pathname + "detail/?max_page=10000&asn_code=" + e.asn_code).then(
           (res) => {
             _this.sortedForm = true;
             _this.sortedid = e.id;
