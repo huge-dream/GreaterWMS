@@ -2,26 +2,26 @@ version: '3.9'
 networks:
   basic:
 services:
-#  front:
-#    build:
-#      context: ./
-#      dockerfile: ./docker/front/Dockerfile
-#    container_name: erp_front
-#    image: cow11023:erpfront
-#    restart: always
-#    ports:
-#      - '8080:8080'
-#    volumes:
-#      - ./frontend:/erp/frontend:rw
-#      - ./web_start.sh:/erp/frontend/web_start.sh
-#    command:
-#      - /bin/bash
-#      - -c
-#      #- "yarn install --force"
-#      - |
-#        bash /erp/frontend/web_start.sh
-#    networks:
-#      - basic
+  front:
+    build:
+      context: ./
+      dockerfile: ./docker/front/Dockerfile
+    container_name: changzhou_front
+    image: changzhou:greaterwmsfront
+    restart: always
+    ports:
+      - '8080:8080'
+    volumes:
+      - ./frontend:/erp/frontend:rw
+      - ./web_start.sh:/erp/frontend/web_start.sh
+    command:
+      - /bin/bash
+      - -c
+      #- "yarn install --force"
+      - |
+        bash /erp/frontend/web_start.sh
+    networks:
+      - basic
   backend:
     build:
       context: ./
@@ -31,11 +31,13 @@ services:
     restart: always
     volumes:
       - ./:/GreaterWMS/:rw #将前目录挂载到容器下
-      #- ./supervisord.conf:/etc/supervisor/supervisord.conf
+      - ./supervisord.conf:/etc/supervisor/supervisord.conf
     ports:
       - '8008:8008'
     environment:
       PYTHONUNBUFFERED: 1
+    depends_on:
+      - front
     command:
       - /bin/bash
       - -c

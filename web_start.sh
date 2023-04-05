@@ -1,5 +1,5 @@
-#!/bin/sh
-cd frontend
-npm install
-npm run serve
-
+#!/bin/bash
+cd templates
+yarn install
+quasar build
+quasar dev
