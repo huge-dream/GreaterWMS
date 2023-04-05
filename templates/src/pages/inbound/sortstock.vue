@@ -198,7 +198,7 @@ export default {
     getList () {
       var _this = this
       if (_this.$q.localStorage.has('auth')) {
-        getauth(_this.pathname + '&page='+this.current, {
+        getauth(_this.pathname + '&page='+this.current + '&asn_code__icontains=' + _this.filter, {
         }).then(res => {
           _this.page_count = res.count;
           _this.table_list = res.results
@@ -288,7 +288,6 @@ export default {
         })
       } else {
         postauth('asn/movetobin/' + _this.movedata.id + '/', _this.movedata).then(res => {
-          _this.filter = ''
           _this.getList()
           _this.MoveToBinCancel()
             _this.$q.notify({
