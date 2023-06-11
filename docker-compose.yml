@@ -13,7 +13,7 @@ services:
       - '8080:8080'
     volumes:
       - ./frontend:/erp/frontend:rw
-      - ./web_start.sh:/erp/frontend/web_start.sh
+      - ./web_start.sh:/GreaterWMS/templates/web_start.sh
     command:
       - /bin/bash
       - -c
