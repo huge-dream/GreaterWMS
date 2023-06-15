@@ -2436,7 +2436,7 @@ export default {
           console.error(err)
         })
       _this.viewPLForm = true
-      getauth(_this.pathname + 'pickinglist/' + e.id + '/')
+      getauth(_this.pathname + 'pickinglist/' + e.id + '/' + '?max_page=10000')
         .then((res) => {
           _this.pickinglist_print_table = []
           _this.picklist_check = 0
