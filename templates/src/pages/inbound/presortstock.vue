@@ -26,7 +26,7 @@
              </q-btn>
            </q-btn-group>
            <q-space />
-           <q-input outlined rounded dense debounce="300" color="primary" v-model="filter" :placeholder="$t('search')" @blur="getSearchList()" @keyup.enter="getSearchList()">
+           <q-input outlined rounded dense debounce="300" color="primary" v-model="filter" :placeholder="$t('search')" @input="getSearchList()" @keyup.enter="getSearchList()">
              <template v-slot:append>
                <q-icon name="search" @click="getSearchList()"/>
              </template>
