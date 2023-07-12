@@ -943,9 +943,8 @@ class AsnlistfileAddViewSet(views.APIView):
                         df = pd.read_excel(files)
                     df.drop_duplicates(keep='first', inplace=True)
                     # data_list = df.drop_duplicates(subset=[data_header.get('goods_code')], keep='first').values
-                    grouped_df = df.groupby(df.columns[1]).agg(
-                        {df.columns[2]: 'sum', df.columns[0]: 'first', df.columns[3]: 'first',
-                         df.columns[4]: 'first'}).reset_index()
+                    grouped_df = df.groupby([df.columns[1], df.columns[3], df.columns[4]]).agg(
+                        {df.columns[2]: 'sum', df.columns[0]: 'first'}).reset_index()
                     data_list = grouped_df[[df.columns[0], df.columns[1], df.columns[2], df.columns[3], df.columns[4]]].values
                     for d in range(len(data_list)):
                         data_validate(str(data_list[d]))
